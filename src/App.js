@@ -1,23 +1,23 @@
 import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+import PageOne from './pages/PageOne';
+import PageTwo from './pages/PageTwo';
 
 function App() {
+  const [home, setHome] = useState(true)
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      <div className='container'>
+        <div>
+          <button onClick={() => setHome(true)} >PageOne</button>
+          <button onClick={() => setHome(false)}>PageTwo</button>
+        </div>
+        {
+          home ? <PageOne /> : <PageTwo />
+        }
+      </div>
     </div>
   );
 }
