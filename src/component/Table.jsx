@@ -18,18 +18,30 @@ const Table = ({ data = [], columns = [], sortable, paginator, filter }) => {
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
         ...fields
     })
-
+    const columnFilter = (e) => {
+        console.log(e.constraints)
+        setFilters({
+            ...filters,
+            [e.field]:
+            {
+                value: e.constraints.value,
+                matchMode: FilterMatchMode.CONTAINS
+            }
+        })
+    }
     const Filterelement = (field) => {
 
-        return (<InputText
-            onInput={(e) => setFilters({
+        return (<InputText onInput={(e) => {
+            console.log(e)
+            setFilters({
                 ...filters,
                 [field]:
                 {
                     value: e.target.value,
                     matchMode: FilterMatchMode.CONTAINS
                 }
-            })} />)
+            })
+        }} />)
     }
     const matchModes = [
         { label: 'Contains', value: FilterMatchMode.CONTAINS },
@@ -42,7 +54,10 @@ const Table = ({ data = [], columns = [], sortable, paginator, filter }) => {
             sortable={sortable}
             filter
             filterMatchModeOptions={matchModes}
+            onFilterApplyClick={(e) => columnFilter(e)}
             filterElement={() => Filterelement(e.field)}
+            onFilterMatchModeChange={(e) => console.log(e)}
+
         />
     })
     const refresh = () => {
