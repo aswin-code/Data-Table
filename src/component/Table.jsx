@@ -5,8 +5,9 @@ import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.css';
 import React, { useState } from 'react'
-import { FilterMatchMode } from 'primereact/api'
+import { FilterMatchMode, PrimeIcons } from 'primereact/api'
 import { InputText } from 'primereact/inputtext';
+
 const Table = ({ data = [], columns = [], sortable, paginator, filter }) => {
     const fields = columns.reduce((acc, crr) => {
         return acc = Object.assign(acc, { [crr.field]: { value: null } })
@@ -30,7 +31,9 @@ const Table = ({ data = [], columns = [], sortable, paginator, filter }) => {
                 }
             })} />)
     }
-
+    const matchModes = [
+        { label: 'Contains', value: FilterMatchMode.CONTAINS },
+    ];
     const TableColumns = columns.map((e, i) => {
         return <Column key={i}
             reset
@@ -38,9 +41,16 @@ const Table = ({ data = [], columns = [], sortable, paginator, filter }) => {
             header={e.header}
             sortable={sortable}
             filter
+            filterMatchModeOptions={matchModes}
             filterElement={() => Filterelement(e.field)}
         />
     })
+    const refresh = () => {
+        setFilters({
+            global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+            ...fields
+        })
+    }
 
     return (<>
         {filter && <InputText
@@ -53,8 +63,8 @@ const Table = ({ data = [], columns = [], sortable, paginator, filter }) => {
                 }
             })}
         />}
+        <button onClick={refresh}><span className='pi pi-refresh'></span></button>
         <DataTable
-
             value={data}
             responsiveLayout='scroll'
             filters={filter && filters}

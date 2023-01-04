@@ -22,7 +22,10 @@ function PageTwo() {
     ];
     return (
         <div className='table-Contianer'>
-            <Table data={sales} columns={columns} sortable />
+            <Table
+                data={sales}
+                columns={columns}
+                sortable />
         </div>
     )
 }

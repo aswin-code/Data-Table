@@ -25,7 +25,11 @@ function PageOne() {
 
     return (
         <div className=' table-Contianer'>
-            <Table columns={columns} data={sales} paginator filter />
+            <Table
+                columns={columns}
+                data={sales}
+                paginator
+                filter />
         </div>
     )
 }
